@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Color Stack — Puzzle Sort</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark">
+
+<!-- Ambient decorative particles -->
+<div class="bg-particles" id="bgParticles" aria-hidden="true"></div>
+
+<!-- ============ HOME PAGE ============ -->
+<section class="page active" id="page-home">
+  <div class="home-wrap">
+
+    <div class="home-top">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" class="brand-tube">
+          <defs>
+            <linearGradient id="gHome1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7B2FF7"/>
+              <stop offset="100%" stop-color="#F72585"/>
+            </linearGradient>
+            <linearGradient id="gHome2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4CC9F0"/>
+              <stop offset="100%" stop-color="#06D6A0"/>
+            </linearGradient>
+          </defs>
+          <rect x="10" y="6" width="14" height="52" rx="7" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+          <rect x="12" y="30" width="10" height="26" rx="5" fill="url(#gHome1)"/>
+          <rect x="40" y="6" width="14" height="52" rx="7" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+          <rect x="42" y="18" width="10" height="38" rx="5" fill="url(#gHome2)"/>
+        </svg>
+      </div>
+      <h1 class="game-title">COLOR<span>STACK</span></h1>
+      <p class="game-subtitle">pour · sort · satisfy</p>
+    </div>
+
+    <div class="home-progress-card glass">
+      <div class="home-progress-item">
+        <span class="hp-label">Best Score</span>
+        <span class="hp-value" id="homeBestScore">0</span>
+      </div>
+      <div class="home-progress-divider"></div>
+      <div class="home-progress-item">
+        <span class="hp-label">Level</span>
+        <span class="hp-value" id="homeLevelProgress">1 / 10</span>
+      </div>
+    </div>
+
+    <nav class="home-menu">
+      <button class="btn btn-primary btn-lg" id="btnPlay">▶ Play</button>
+      <button class="btn btn-glass" id="btnLevels">🗺 Levels</button>
+      <button class="btn btn-glass" id="btnStats">🏆 Statistics</button>
+      <button class="btn btn-glass" id="btnSettings">⚙ Settings</button>
+    </nav>
+
+  </div>
+</section>
+
+<!-- ============ LEVELS PAGE ============ -->
+<section class="page" id="page-levels">
+  <header class="subpage-header">
+    <button class="icon-btn" data-nav="page-home">←</button>
+    <h2>Select Level</h2>
+    <span class="header-spacer"></span>
+  </header>
+  <div class="levels-grid" id="levelsGrid"></div>
+</section>
+
+<!-- ============ SETTINGS PAGE ============ -->
+<section class="page" id="page-settings">
+  <header class="subpage-header">
+    <button class="icon-btn" data-nav="page-home">←</button>
+    <h2>Settings</h2>
+    <span class="header-spacer"></span>
+  </header>
+
+  <div class="settings-list">
+
+    <div class="settings-card glass">
+      <div class="settings-row">
+        <span class="settings-label">🔊 Sound Effects</span>
+        <label class="switch"><input type="checkbox" id="toggleSound"><span class="slider"></span></label>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">🎵 Music</span>
+        <label class="switch"><input type="checkbox" id="toggleMusic"><span class="slider"></span></label>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">📳 Vibration</span>
+        <label class="switch"><input type="checkbox" id="toggleVibration"><span class="slider"></span></label>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">✨ Animations</span>
+        <label class="switch"><input type="checkbox" id="toggleAnimations"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="settings-card glass">
+      <span class="settings-label settings-section-label">🎨 Theme</span>
+      <div class="theme-grid">
+        <button class="theme-swatch" data-theme="dark">
+          <span class="swatch-preview swatch-dark"></span> Dark Space
+        </button>
+        <button class="theme-swatch" data-theme="light">
+          <span class="swatch-preview swatch-light"></span> Light
+        </button>
+        <button class="theme-swatch" data-theme="ocean">
+          <span class="swatch-preview swatch-ocean"></span> Ocean
+        </button>
+        <button class="theme-swatch" data-theme="neon">
+          <span class="swatch-preview swatch-neon"></span> Neon
+        </button>
+      </div>
+    </div>
+
+    <button class="btn btn-danger" id="btnResetProgress">Reset Progress</button>
+  </div>
+</section>
+
+<!-- ============ STATISTICS PAGE ============ -->
+<section class="page" id="page-stats">
+  <header class="subpage-header">
+    <button class="icon-btn" data-nav="page-home">←</button>
+    <h2>Statistics</h2>
+    <span class="header-spacer"></span>
+  </header>
+
+  <div class="stats-grid" id="statsGrid"></div>
+</section>
+
+<!-- ============ GAME PAGE ============ -->
+<section class="page" id="page-game">
+
+  <header class="game-hud">
+    <button class="icon-btn" id="btnGameBack">←</button>
+    <div class="hud-center">
+      <span class="hud-level" id="hudLevel">LEVEL 1</span>
+      <div class="hud-stats">
+        <span class="hud-chip">⭐ <span id="hudScore">0</span></span>
+        <span class="hud-chip">↕ <span id="hudMoves">0</span></span>
+        <span class="hud-chip">⏱ <span id="hudTime">0:00</span></span>
+      </div>
+    </div>
+    <button class="icon-btn" id="btnPause">⏸</button>
+  </header>
+
+  <div class="tubes-viewport">
+    <div class="tubes-arena" id="tubesArena"></div>
+  </div>
+
+  <footer class="game-toolbar">
+    <button class="tool-btn" id="btnUndo">
+      <span class="tool-icon">↩</span><span class="tool-label">Undo</span>
+    </button>
+    <button class="tool-btn" id="btnRestart">
+      <span class="tool-icon">🔄</span><span class="tool-label">Restart</span>
+    </button>
+    <button class="tool-btn" id="btnHint">
+      <span class="tool-icon">💡</span><span class="tool-label" id="hintLabel">Hint</span>
+    </button>
+  </footer>
+</section>
+
+<!-- ============ OVERLAYS ============ -->
+
+<!-- Pause overlay -->
+<div class="overlay" id="overlayPause">
+  <div class="modal glass">
+    <h2>Paused</h2>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="btnResume">▶ Resume</button>
+      <button class="btn btn-glass" id="btnPauseRestart">🔄 Restart Level</button>
+      <button class="btn btn-glass" id="btnPauseSettings">⚙ Settings</button>
+      <button class="btn btn-glass" id="btnPauseHome">🏠 Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- Level complete overlay -->
+<div class="overlay" id="overlayComplete">
+  <div class="modal glass modal-complete">
+    <div class="confetti-layer" id="confettiLayer"></div>
+    <h2 class="complete-title">Level Complete!</h2>
+    <div class="stars-row" id="starsRow">
+      <span class="star" data-i="1">★</span>
+      <span class="star" data-i="2">★</span>
+      <span class="star" data-i="3">★</span>
+    </div>
+    <div class="complete-stats">
+      <div class="cstat"><span>Score</span><b id="completeScore">0</b></div>
+      <div class="cstat"><span>Moves</span><b id="completeMoves">0</b></div>
+      <div class="cstat"><span>Time</span><b id="completeTime">0:00</b></div>
+      <div class="cstat"><span>Best</span><b id="completeBest">0</b></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="btnNextLevel">Next Level →</button>
+      <button class="btn btn-glass" id="btnRetryLevel">🔄 Retry</button>
+      <button class="btn btn-glass" id="btnHomeFromComplete">🏠 Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm reset -->
+<div class="overlay" id="overlayConfirmReset">
+  <div class="modal glass">
+    <h2>Reset all progress?</h2>
+    <p class="modal-sub">This clears every level, star, and score. This can't be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-danger" id="btnConfirmReset">Yes, Reset</button>
+      <button class="btn btn-glass" id="btnCancelReset">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
